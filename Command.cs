@@ -85,12 +85,12 @@ namespace RAA_Level2_Mod_01
                     bool convertFeet = double.TryParse(lData[1], out hImperial);
                     bool convertMeters = double.TryParse(lData[2], out hMetric);
 
-                    if (rabioButtonValue == rb1)
+                    if (rabioButtonValue == "Imperial")
                     {
                         height = hImperial;
                     }
 
-                    if (rabioButtonValue == true)
+                    if (rabioButtonValue == "Metric")
                     {
                         //if using metric, convert meters to feet
                         //double hMetric2 = hMetric * 3.28084;
@@ -158,8 +158,8 @@ namespace RAA_Level2_Mod_01
                         if (checkBox3Value == true)
                         {
                             ViewSheet newSheet = ViewSheet.Create(doc, coll2.FirstElementId());
-                            newSheet.Name = ($"Ceiling Plan+{ lData[0]}");
-                            newSheet.SheetNumber = counterCP.ToString();
+                            newSheet.Name = ($"Ceiling Plan+ {lData[0]}");
+                            newSheet.SheetNumber = counterCP+10.ToString();
                         }
                         //TaskDialog.Show("Test", "Check box 2 Ceiling Plan");
                     }
