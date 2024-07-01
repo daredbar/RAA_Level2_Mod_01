@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command RAA_Level2_Mod_01</Text>
+    <Description>Some description for RAA_Level2_Mod_01</Description>
+    <Assembly>RAA_Level2_Mod_01.dll</Assembly>
+    <FullClassName>RAA_Level2_Mod_01.Command</FullClassName>
+    <ClientId>0222ec2e-a8a6-45b9-a2e9-aa4c058b5d89</ClientId>
+    <VendorId>com.YOUR COMPANY NAME</VendorId>
+    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application RAA_Level2_Mod_01</Name>
+    <Assembly>RAA_Level2_Mod_01.dll</Assembly>
+    <FullClassName>RAA_Level2_Mod_01.App</FullClassName>
+    <ClientId>553e025f-a4bc-47eb-959a-b1501d4cbfd1</ClientId>
+    <VendorId>com.YOUR COMPANY NAME</VendorId>
+    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
+</RevitAddIns>
