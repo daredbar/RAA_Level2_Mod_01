@@ -82,5 +82,12 @@ namespace RAA_Level2_Mod_01
             else
                 return false;
         }
+        public bool GetCheckbox3()
+        {
+            if (chbCheck3.IsChecked == true)
+                return true;
+            else
+                return false;
+        }
     }
 }

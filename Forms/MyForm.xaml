@@ -46,6 +46,7 @@
             <StackPanel Grid.Row="6" Grid.Column="1" Margin="0,10,0,10">
                 <CheckBox x:Name="chbCheck1" Margin="0,0,0,5">Create Floor Plans</CheckBox>
                 <CheckBox x:Name="chbCheck2" Margin="0,0,0,5">Create Ceiling Plans</CheckBox>
+                <CheckBox x:Name="chbCheck3" Margin="0,0,0,5">Create Sheets</CheckBox>
             </StackPanel>
             <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" OpacityMask="#FF1C6B06">
                 <Button x:Name="btnOK" Width="100" Height="25" Margin="0,0,10,0" Click="btnOK_Click">OK</Button>

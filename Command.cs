@@ -64,57 +64,114 @@ namespace RAA_Level2_Mod_01
 
             bool checkBox2Value = currentForm.GetCheckbox2();
 
+            bool checkBox3Value = currentForm.GetCheckbox3();
+
             string rabioButtonValue = currentForm.GetGroup1();
 
             using (Transaction t = new Transaction(doc))
             {
                 t.Start("Create Levels");
 
-                int counter = 0;
+                int counterLevel = 0;
+                int counterFP = 0;
+                int counterCP = 0;
                 foreach (string[] lData in dataList)
                 {
+                    double height = 0;
                     double hImperial = 0;
-                    double hMetric   = 0;
-                    if (checkBox1Value == true)
-                    {
-                        return hImperial as double;
-                    }
-
-                    if (checkBox2Value == true)
-                    {
-                        return hMetric
-                    }
+                    double hMetric = 0;
 
                     //get height and convert from string to double
                     bool convertFeet = double.TryParse(lData[1], out hImperial);
                     bool convertMeters = double.TryParse(lData[2], out hMetric);
 
-                    //if using metric, convert meters to feet
-                    double heightMetersConvert = hMetric * 3.28084;
-                    double heightMetersConvert2 = UnitUtils.ConvertToInternalUnits(hMetric, UnitTypeId.Meters);
+                    if (rabioButtonValue == rb1)
+                    {
+                        height = hImperial;
+                    }
 
-                    TaskDialog.Show("Test", rabioButtonValue);
+                    if (rabioButtonValue == true)
+                    {
+                        //if using metric, convert meters to feet
+                        //double hMetric2 = hMetric * 3.28084;
+                        height = UnitUtils.ConvertToInternalUnits(hMetric * 3.28084, UnitTypeId.Meters);
+                    }
+
+                    //TaskDialog.Show("Test", rabioButtonValue);
 
                     //create level and rename
-                    Level cLevel = Level.Create(doc, rabioButtonValue);
+                    Level cLevel = Level.Create(doc, height);
                     cLevel.Name = lData[0];
+
+                    FilteredElementCollector coll1 = new FilteredElementCollector(doc);
+                    coll1.OfClass(typeof(ViewFamilyType));
+
+                    FilteredElementCollector coll2 = new FilteredElementCollector(doc);
+                    coll2.OfCategory(BuiltInCategory.OST_TitleBlocks);
+                    coll2.WhereElementIsElementType();
 
 
                     if (checkBox1Value == true)
                     {
-                        TaskDialog.Show("Test", "Check box 1 Floor Plan");
+                        ViewFamilyType floorPlanVFT = null;
+                        foreach (ViewFamilyType curVFT in coll1)
+                        {
+                            if (curVFT.ViewFamily == ViewFamily.FloorPlan)
+                            {
+                                floorPlanVFT = curVFT;
+                                break;
+                            }
+                        }
+
+                        // create a view by specifying the document, view family type, and level
+                        ViewPlan newPlan = ViewPlan.Create(doc, floorPlanVFT.Id, cLevel.Id);
+                        newPlan.Name = lData[0];
+                        counterFP++;
+
+                        if (checkBox3Value == true)
+                        {
+                            ViewSheet newSheet = ViewSheet.Create(doc, coll2.FirstElementId());
+                            newSheet.Name = ($"Floor Plan+{  lData[0]}");
+                            newSheet.SheetNumber = counterFP.ToString();
+                        }
+
+                        //TaskDialog.Show("Test", "Check box 1 Floor Plan");
                     }
 
                     if (checkBox2Value == true)
                     {
-                        TaskDialog.Show("Test", "Check box 2 Ceiling Plan");
+                        ViewFamilyType ceilingPlanVFT = null;
+                        foreach (ViewFamilyType curVFT in coll1)
+                        {
+                            if (curVFT.ViewFamily == ViewFamily.CeilingPlan)
+                            {
+                                ceilingPlanVFT = curVFT;
+                                break;
+                            }
+                        }
+
+                        // create a ceiling plan using the ceiling plan view family type
+                        ViewPlan newCeilingPlan = ViewPlan.Create(doc, ceilingPlanVFT.Id, cLevel.Id);
+                        newCeilingPlan.Name = lData[0];
+                        counterCP++;
+
+                        if (checkBox3Value == true)
+                        {
+                            ViewSheet newSheet = ViewSheet.Create(doc, coll2.FirstElementId());
+                            newSheet.Name = ($"Ceiling Plan+{ lData[0]}");
+                            newSheet.SheetNumber = counterCP.ToString();
+                        }
+                        //TaskDialog.Show("Test", "Check box 2 Ceiling Plan");
                     }
+
+                    counterLevel++;
 
                 }
 
                 t.Commit();
 
-                TaskDialog.Show("Complete", "Created " + counter.ToString() + " Levels.")
+                TaskDialog.Show("Complete Levels", "Created " + counterLevel.ToString() + " Levels.");
+                TaskDialog.Show("Floor Plans", $"{counterFP} Floor Plans created & {counterCP} Ceiling Plans created.");
             }
 
 
