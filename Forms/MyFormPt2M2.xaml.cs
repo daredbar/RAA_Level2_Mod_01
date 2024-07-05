@@ -23,10 +23,23 @@ namespace RAA_Level2_Mod_01
     /// </summary>
     public partial class MyFormPt2M2 : Window
     {
-        public MyFormPt2M2()
+        public MyFormPt2M2(Document doc, string msg, List<string> listChange)
         {
             InitializeComponent();
+
+            string tx = msg;
+            lbxText2.Items.Add(tx);
+
+            foreach (string item in listChange)
+            {
+                lbxText2.Items.Add(item);
+            }
         }
-       
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
     }
 }

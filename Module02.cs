@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Media.Media3D;
+using Windows = System.Windows;
 
 #endregion
 
@@ -26,7 +28,13 @@ namespace RAA_Level2_Mod_01
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            // put any code needed for the form here
+            // check if the current view is a ViewSheet
+            View activeView = doc.ActiveView;
+            if (!(activeView is ViewSheet))
+            {
+                TaskDialog.Show("Error", "The current view must be a Sheet View");
+                return Result.Failed;
+            }
 
             // open form
             MyFormPt1M2 currentForm2 = new MyFormPt1M2(doc, null, null)
@@ -58,7 +66,7 @@ namespace RAA_Level2_Mod_01
             }
 
             string returnString = "There are " + reflist.Count.ToString() + " selected elements";
-            TaskDialog.Show("Test", returnString);
+            //TaskDialog.Show("Test", returnString);
             List<string> returnStrings = new List<string> { };
             foreach (var it in reflist)
             {
@@ -78,17 +86,35 @@ namespace RAA_Level2_Mod_01
 
             currentForm3.ShowDialog();
 
+            List<string> noAmount = new List<string>();
+
             using (Transaction t = new Transaction(doc))
             {
                 t.Start("Viewports Renumber");
+                int vpNum;  
+                int.TryParse(currentForm3.GetSelectedComboboxItem(), out vpNum);
                 foreach (var it in reflist)
                 {
-                    var vpNum = currentForm3.GetSelectedComboboxItem();
-                    vpNum = vpNum + 1;
-                    Viewport.get_parameter(BuiltInParameter.VIEWPORT_DETAIL_NUMBER).Value = vpNum;
+                    Element viewPortElement = doc.GetElement(it.ElementId);
+                    Viewport vPort = viewPortElement as Viewport;
+                    Parameter pram = vPort.get_Parameter(BuiltInParameter.VIEWPORT_DETAIL_NUMBER);
+                    vpNum++;
+                    pram.Set(vpNum.ToString());
+                    noAmount.Add(vpNum.ToString());
                 }
                 t.Commit();
             }
+
+            // open form
+            MyFormPt2M2 currentForm4 = new MyFormPt2M2(doc, returnString, noAmount)
+            {
+                Width = 800,
+                Height = 400,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen,
+                Topmost = true,
+            };
+
+            currentForm4.ShowDialog();
 
             return Result.Succeeded;
 

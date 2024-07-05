@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="1" Content="Results" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"></Label>
             <ListBox x:Name="lbxText2" Grid.Row="1" Grid.Column="1"></ListBox>
-            <Button x:Name="btnClose" Grid.Row="2" Grid.Column="1" Content="Close" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+            <Button x:Name="btnClose" Grid.Row="2" Grid.Column="1" Content="Close" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnClose_Click"></Button>
         </Grid>
     </Border>
 </Window>
