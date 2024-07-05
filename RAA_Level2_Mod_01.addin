@@ -9,6 +9,15 @@
     <VendorId>com.YOUR COMPANY NAME</VendorId>
     <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
   </AddIn>
+  <AddIn Type="Command">
+	<Text>Command RAA_Level2_Mod_02</Text>
+	<Description>Some description for RAA_Level2_Mod_02</Description>
+	<Assembly>RAA_Level2_Mod_01.dll</Assembly>
+	<FullClassName>RAA_Level2_Mod_01.Module02</FullClassName>
+	<ClientId>B1433B48-B1B8-4F6F-99E5-6E7F6585415F</ClientId>
+	<VendorId>com.YOUR COMPANY NAME</VendorId>
+	<VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+  </AddIn>
   <AddIn Type="Application">
     <Name>Application RAA_Level2_Mod_01</Name>
     <Assembly>RAA_Level2_Mod_01.dll</Assembly>
